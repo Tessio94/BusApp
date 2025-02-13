@@ -15,7 +15,6 @@ export default async function BusList({
     [origin, destination],
   );
   const buses = data.rows;
-  console.log(buses);
 
   const route_name = buses[0].routes;
 
@@ -81,7 +80,13 @@ export default async function BusList({
   );
   const distance_from_start = distance_origin.rows[0].distance_from_start;
 
-  buses.forEach((bus) => {
+  const stopArr = buses[0].stoppages;
+
+  const start = stopArr.indexOf(origin);
+  const end = stopArr.indexOf(destination) + 1;
+  const stop = stopArr.slice(start, end);
+
+  for (const bus of buses) {
     const total_fare = parseFloat(bus.fare) * total_distance;
 
     const travel_time_hrs = total_distance / bus.speed;
@@ -108,8 +113,16 @@ export default async function BusList({
     bus.origin = origin;
     bus.destination = destination;
     bus.doj = doj;
-  });
-  console.log(buses);
+    bus.stop = stop;
+
+    // fetch booked seats
+    const bookedSeats = await pool.query(
+      `SELECT seat_no FROM journey WHERE bus_name = $1 AND doj = $2 AND stoppages && $3`,
+      [bus.bus_name, doj, stopArr],
+    );
+
+    bus.booked_seats = bookedSeats.rows.map((row) => row.seat_no);
+  }
 
   return buses.length === 0 ? (
     <main>

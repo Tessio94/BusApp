@@ -14,7 +14,8 @@ type busArr = {
   origin: string;
   destination: string;
   doj: string;
-  bookedSeats: Array<string>;
+  booked_seats: Array<string>;
+  stop: string;
   routes: string;
   total_fare: number;
   estimated_arrival: string;
@@ -37,23 +38,19 @@ const Buses: React.FC<props> = ({ buses }) => {
   const [stops, setStops] = useState<string[]>([]);
   const [bookedSeats, setBookedSeats] = useState<string[]>([]);
 
-  const stopArr = buses[0].stoppages;
-  const start = stopArr.indexOf(buses[0].origin);
-  const end = stopArr.indexOf(buses[0].destination);
-  const stop = stopArr.slice(start, end);
-
   const handleFare = (
     total_fare: number,
     bus_name: string,
-    startTime: string,
+    start_time: string,
     total_seats: number,
     booked_seats: string[],
+    stop: string[],
   ) => {
-    setBookedSeats(booked_seats);
     setTotalFare(total_fare);
-    setTotalSeats(total_seats);
     setBusName(bus_name);
-    setStartTime(startTime);
+    setStartTime(start_time);
+    setTotalSeats(total_seats);
+    setBookedSeats(booked_seats);
     setStops(stop);
     handleSeatVisible();
   };
@@ -109,7 +106,8 @@ const Buses: React.FC<props> = ({ buses }) => {
                       bus.bus_name,
                       bus.start_time,
                       bus.total_seats,
-                      bus.bookedSeats,
+                      bus.booked_seats,
+                      bus.stop,
                     )
                   }
                 >
@@ -128,6 +126,7 @@ const Buses: React.FC<props> = ({ buses }) => {
                       total_seats={totalSeats}
                       fare={totalFare}
                       bookedSeats={bookedSeats}
+                      start_time={startTime}
                     />
                   </div>
                 )}
@@ -135,7 +134,14 @@ const Buses: React.FC<props> = ({ buses }) => {
             </div>
           );
         })}
-        {seatVisibility && <button onClick={handleSeatVisible}>X</button>}
+        {seatVisibility && (
+          <button
+            onClick={handleSeatVisible}
+            className="fixed right-[10%] top-[10%] bg-indigo-600 p-4 text-white hover:cursor-pointer hover:bg-indigo-800"
+          >
+            X
+          </button>
+        )}
       </div>
     </section>
   );
