@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-
+    // better than map and Promise.all()
     for (const data of body) {
       const result = await pool.query(
         `INSERT INTO journey (bus_name, origin, destination, doj, passenger_name, seat_no, mobile_no, email, stoppages, fare, start_time) VALUES ($1, $2, $3, $4, $5, $6 ,$7 ,$8 ,$9 ,$10 , $11) RETURNING *`,

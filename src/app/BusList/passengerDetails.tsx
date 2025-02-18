@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type passengerObj = {
@@ -54,25 +55,19 @@ const PassengerDetails: React.FC<passengerObj> = ({
     })),
   );
 
+  const router = useRouter();
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
   ) => {
     const { name, value } = e.target;
-    console.log("e.target :", e.target);
 
-    console.log("name :", name);
-    console.log("value :", value);
-    console.log("index :", index);
-
-    const newFormData = [...formData];
-    console.log("1fd", newFormData);
-
-    newFormData[index] = { ...newFormData[index], [name]: value };
-    console.log("2fd", newFormData);
-    console.log("3fd", formData);
-
-    setFormData(newFormData);
+    setFormData((prevFormData) =>
+      prevFormData.map((item, i) =>
+        i === index ? { ...item, [name]: value } : item,
+      ),
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -84,9 +79,9 @@ const PassengerDetails: React.FC<passengerObj> = ({
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
-      const seatNos = response.data.bookingId;
-      console.log(seatNos);
+
+      const bookingIds = response.data.bookingId;
+      router.push(`/Payments/${bookingIds.join(",")}`);
 
       alert("Seat Booked");
     } catch (error) {
