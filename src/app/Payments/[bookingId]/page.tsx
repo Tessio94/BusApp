@@ -18,12 +18,10 @@ type journey = {
   payment_status: boolean;
 };
 
-interface Params {
-  bookingId: string;
-}
+type Params = Promise<{ bookingId: string }>;
 
 export default async function Payments({ params }: { params: Params }) {
-  const { bookingId } = params;
+  const { bookingId } = await params;
   const bookingIds = decodeURIComponent(bookingId).split(",");
 
   const result: journey[] = await Promise.all(
