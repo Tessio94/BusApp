@@ -1,4 +1,4 @@
-import { Pool } from "pg";
+import { Pool, PoolClient } from "pg";
 
 export const pool = new Pool({
   user: process.env.USER_NAME,
@@ -9,15 +9,15 @@ export const pool = new Pool({
 });
 
 export default async function dbConnect() {
-  await pool.connect((error, client: any, release) => {
-    if (error) {
-      return console.log("Error in connecting Database", error.stack);
-    }
-    client.query("SELECT NOW()", (error: any) => {
-      release();
-      if (error) {
-        return console.error("Error in query execution", error.stack);
-      }
-    });
-  });
+  let client: PoolClient | undefined;
+
+  try {
+    client = await pool.connect();
+    await client.query("SELECT NOW()");
+    console.log("Database connected successfully.");
+  } catch (error) {
+    console.error("Database connection error:", (error as Error).stack);
+  } finally {
+    client?.release();
+  }
 }

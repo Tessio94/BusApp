@@ -8,7 +8,7 @@ type passengerObj = {
   origin: string;
   destination: string;
   doj: string;
-  total_seats: number;
+  total_seats?: number;
   stoppages: Array<string>;
   start_time: string;
   fare: number;

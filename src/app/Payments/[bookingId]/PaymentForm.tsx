@@ -26,7 +26,10 @@ const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
 type props = { formData: passengerData[]; bookingIds: Array<string> };
 
-const PaymentForm: React.FC<props> = ({ formData, bookingids }) => {
+const PaymentForm: React.FC<props> = ({ formData, bookingIds }: props) => {
+  void formData;
+  void bookingIds;
+
   return (
     <main className="m-1o m-10 mx-auto max-w-6xl border p-10 text-center">
       <div className="flex">

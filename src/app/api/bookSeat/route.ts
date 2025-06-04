@@ -2,7 +2,7 @@ import { pool } from "../../../../utils/dbConnect";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const bookingId: any[] = [];
+  const bookingId: number[] = [];
 
   try {
     const body = await req.json();
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       );
       console.log(result);
 
-      bookingId.push(result.rows.map((item) => item.id));
+      bookingId.push(...result.rows.map((item) => item.id));
     }
 
     return NextResponse.json({ status: "OK", bookingId });

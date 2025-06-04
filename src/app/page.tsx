@@ -94,7 +94,7 @@ export default function Home() {
     }
   };
 
-  const handleFormSubmit = function (e) {
+  const handleFormSubmit = function (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     searchBuses();
   };

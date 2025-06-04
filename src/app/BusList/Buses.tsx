@@ -15,7 +15,7 @@ type busArr = {
   destination: string;
   doj: string;
   booked_seats: Array<string>;
-  stop: string;
+  stop: string[];
   routes: string;
   total_fare: number;
   estimated_arrival: string;

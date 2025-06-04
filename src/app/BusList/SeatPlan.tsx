@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { useState } from "react";
-import PassengerDetails from "./passengerDetails";
+import PassengerDetails from "./PassengerDetails";
 
 type tripObj = {
   bus_name: string;
@@ -27,14 +27,14 @@ const SeatPlan: React.FC<tripObj> = ({
   start_time,
   bookedSeats,
 }) => {
-  let right = [];
-  let left = [];
+  const right = [];
+  const left = [];
 
   if (total_seats == 48) {
-    let rows = 4;
-    let cols = 12;
+    const rows = 4;
+    const cols = 12;
 
-    let seatOrder = Array.from(
+    const seatOrder = Array.from(
       { length: rows * cols },
       (_, index) => index + 1,
     );
@@ -53,10 +53,10 @@ const SeatPlan: React.FC<tripObj> = ({
       }
     }
   } else {
-    let rows = 3;
-    let cols = 12;
+    const rows = 3;
+    const cols = 12;
 
-    let seatOrder = Array.from(
+    const seatOrder = Array.from(
       { length: rows * cols },
       (_, index) => index + 1,
     );
