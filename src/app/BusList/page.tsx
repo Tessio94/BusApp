@@ -18,6 +18,9 @@ export default async function BusList({
 
   const route_name = buses[0].routes;
 
+  if (typeof doj !== "string") {
+    throw new Error("Invalid date format");
+  }
   const parsedDate = parseISO(doj);
   const formated_date = format(parsedDate, "dd/MM/yyyy");
 
