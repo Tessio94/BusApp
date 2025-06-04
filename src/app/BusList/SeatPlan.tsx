@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { useState } from "react";
-import PassengerDetails from "./PassengerDetails";
+import PassengerDetails from "./passengerDetails";
 
 type tripObj = {
   bus_name: string;
