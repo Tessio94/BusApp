@@ -23,9 +23,7 @@ export default async function Payments({
 }: {
   params: { bookingId: string };
 }) {
-  console.log(await params);
-
-  const { bookingId } = await params;
+  const { bookingId } = params;
   const bookingIds = decodeURIComponent(bookingId).split(",");
 
   const result: journey[] = await Promise.all(
