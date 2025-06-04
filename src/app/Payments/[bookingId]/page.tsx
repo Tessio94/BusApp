@@ -18,11 +18,11 @@ type journey = {
   payment_status: boolean;
 };
 
-export default async function Payments({
-  params,
-}: {
-  params: { bookingId: string };
-}) {
+interface Params {
+  bookingId: string;
+}
+
+export default async function Payments({ params }: { params: Params }) {
   const { bookingId } = params;
   const bookingIds = decodeURIComponent(bookingId).split(",");
 
